@@ -17,7 +17,7 @@ const reducer = (state = initialState, action) => {
   case TYPES.LOGIN_SUCCESS:
     return {
       ...state,
-      user: action.payload,
+      ...action.payload,
       status: TYPES.STATUS_SUCCESS,
     };
   case TYPES.LOGIN_ERROR:
