@@ -60,6 +60,7 @@ const useExpenseForm = () => {
   }), []);
 
   const [newExpense, setNewExpense] = useState(newExpenseInitialState);
+  const [isEditingMode, setIsEditingMode] = useState(false);
 
   const handleChange = useCallback((event) => {
     const { value, name } = event.target;
@@ -80,6 +81,12 @@ const useExpenseForm = () => {
 
   const dispatch = useDispatch();
 
+  const handleSaveEditedRecord = useCallback((values) => {
+    dispatch(actions.saveEditedRecord(wallet.expenses, values));
+    setNewExpense(newExpenseInitialState);
+    setIsEditingMode(false);
+  }, [dispatch, newExpenseInitialState, wallet.expenses]);
+
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
 
@@ -87,13 +94,24 @@ const useExpenseForm = () => {
 
     const formValues = Object.fromEntries(formData);
 
+    if (isEditingMode) {
+      return handleSaveEditedRecord({ id: wallet.recordToEdit.id, ...formValues });
+    }
+
     newExpenseSchema.isValid(formValues).then((isValid) => {
       if (isValid) {
         dispatch(actions.addExpense(formValues, wallet.expenses.length));
         setNewExpense(newExpenseInitialState);
       }
     });
-  }, [dispatch, wallet.expenses.length, newExpenseInitialState]);
+  }, [
+    dispatch,
+    wallet.expenses.length,
+    newExpenseInitialState,
+    handleSaveEditedRecord,
+    isEditingMode,
+    wallet.recordToEdit,
+  ]);
 
   useEffect(() => {
     dispatch(actions.updateTotalExpense(wallet.expenses));
@@ -102,6 +120,7 @@ const useExpenseForm = () => {
   useEffect(() => {
     if (wallet.recordToEdit) {
       setNewExpense(wallet.recordToEdit);
+      setIsEditingMode(true);
     }
   }, [wallet.recordToEdit]);
 
@@ -112,6 +131,7 @@ const useExpenseForm = () => {
     handleChange,
     newExpense,
     handleSubmit,
+    isEditingMode,
   };
 };
 

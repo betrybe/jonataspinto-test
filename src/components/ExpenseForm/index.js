@@ -14,6 +14,7 @@ const ExpenseForm = () => {
     handleChange,
     newExpense,
     handleSubmit,
+    isEditingMode,
   } = useExpenseForm();
 
   const dispatch = useDispatch();
@@ -24,7 +25,9 @@ const ExpenseForm = () => {
 
   return (
     <form
-      className="p-4 bg-dark text-light expense-form"
+      className={
+        `p-4 bg-${!isEditingMode ? 'dark' : 'success'} text-light expense-form`
+      }
       onSubmit={ handleSubmit }
     >
       <Input
@@ -36,6 +39,7 @@ const ExpenseForm = () => {
         name="value"
         value={ newExpense.value }
         onChange={ handleChange }
+        data-testid="value-input"
       />
       <Select
         className="form-select"
@@ -44,6 +48,7 @@ const ExpenseForm = () => {
         name="currency"
         options={ currenciesOptions }
         onChange={ handleChange }
+        data-testid="currency-input"
       />
       <Select
         className="form-select"
@@ -52,6 +57,7 @@ const ExpenseForm = () => {
         name="method"
         options={ paymentMethods }
         onChange={ handleChange }
+        data-testid="method-input"
       />
       <Select
         className="form-select"
@@ -60,6 +66,7 @@ const ExpenseForm = () => {
         name="tag"
         options={ tags }
         onChange={ handleChange }
+        data-testid="tag-input"
       />
       <Input
         type="text"
@@ -70,12 +77,14 @@ const ExpenseForm = () => {
         name="description"
         value={ newExpense.description }
         onChange={ handleChange }
+        data-testid="description-input"
+
       />
       <button
         type="submit"
         className="btn btn-primary"
       >
-        Adicionar despesa
+        {!isEditingMode ? 'Adicionar despesa' : 'Editar despesa'}
       </button>
     </form>
   );
