@@ -87,10 +87,12 @@ const useExpenseForm = () => {
 
     const formValues = Object.fromEntries(formData);
 
-    if (newExpenseSchema.isValid(formValues).then((value) => value)) {
-      dispatch(actions.addExpense(formValues, wallet.expenses.length));
-      setNewExpense(newExpenseInitialState);
-    }
+    newExpenseSchema.isValid(formValues).then((isValid) => {
+      if (isValid) {
+        dispatch(actions.addExpense(formValues, wallet.expenses.length));
+        setNewExpense(newExpenseInitialState);
+      }
+    });
   }, [dispatch, wallet.expenses.length, newExpenseInitialState]);
 
   useEffect(() => {
