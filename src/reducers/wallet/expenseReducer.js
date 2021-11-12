@@ -21,6 +21,11 @@ const expenseReducer = () => {
       ...action.payload,
       status: TYPES.STATUS_SUCCESS,
     }),
+    [TYPES.LOAD_RECORD_TO_EDIT]: (state, action) => ({
+      ...state,
+      recordToEdit: action.payload,
+      status: TYPES.STATUS_SUCCESS,
+    }),
   };
 
   return REDUCERS;
