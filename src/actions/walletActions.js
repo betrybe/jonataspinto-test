@@ -7,7 +7,9 @@ export const fetchCurrencies = () => async (dispatch) => {
   });
 
   try {
-    const currencies = await getAllCurrencies();
+    const response = await getAllCurrencies();
+
+    const currencies = Object.keys(response).filter((code) => code !== 'USDT');
 
     dispatch({
       type: ACTIONS_TYPES.FETCH_CURRENCIES_SUCCESS,
