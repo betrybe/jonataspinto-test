@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../actions';
+import newExpenseSchema from './schema';
 
 const useExpenseForm = () => {
-  const paymentMethods = [
+  const paymentMethods = useMemo(() => ([
     {
       value: 'dinheiro',
       label: 'Dinheiro',
@@ -16,9 +17,9 @@ const useExpenseForm = () => {
       value: 'cartão de débito',
       label: 'Cartão de débito',
     },
-  ];
+  ]), []);
 
-  const tags = [
+  const tags = useMemo(() => ([
     {
       value: 'alimentação',
       label: 'Alimentação',
@@ -39,7 +40,7 @@ const useExpenseForm = () => {
       value: 'saúde',
       label: 'Saúde',
     },
-  ];
+  ]), []);
 
   const mounCurrenciesOptions = useCallback((list = []) => (
     list.map((currency) => ({
@@ -52,14 +53,13 @@ const useExpenseForm = () => {
 
   const currenciesOptions = mounCurrenciesOptions(wallet.currencies);
 
-  const [newExpense, setNewExpense] = useState({
+  const newExpenseInitialState = useMemo(() => ({
     value: 0,
-    currency: '',
-    method: '',
-    tag: '',
     description: '',
     exchangeRates: null,
-  });
+  }), []);
+
+  const [newExpense, setNewExpense] = useState(newExpenseInitialState);
 
   const handleChange = useCallback((event) => {
     const { value, name } = event.target;
@@ -82,8 +82,16 @@ const useExpenseForm = () => {
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    dispatch(actions.addExpense(newExpense, wallet.expenses.length));
-  }, [newExpense, dispatch, wallet.expenses.length]);
+
+    const formData = new FormData(event.target);
+
+    const formValues = Object.fromEntries(formData);
+
+    if (newExpenseSchema.isValid(formValues).then((value) => value)) {
+      dispatch(actions.addExpense(formValues, wallet.expenses.length));
+      setNewExpense(newExpenseInitialState);
+    }
+  }, [dispatch, wallet.expenses.length, newExpenseInitialState]);
 
   useEffect(() => {
     dispatch(actions.updateTotalExpense(wallet.expenses));
