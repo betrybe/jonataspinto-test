@@ -1,6 +1,7 @@
 import ACTIONS_TYPES from '../constants';
 import getAllCurrencies from '../services/getCurrencies';
 import addUpExpenses from '../utils/addUpExpenses';
+import revomeItemOfList from '../utils/revomeItemOfList';
 
 const fetchCurrencies = () => async (dispatch) => {
   dispatch({
@@ -68,8 +69,28 @@ const updateTotalExpense = (expenses) => async (dispatch) => {
   }
 };
 
+const removeExpense = (list, item) => async (dispatch) => {
+  dispatch({
+    type: ACTIONS_TYPES.WALLET_IS_FETCHING,
+  });
+  const expenses = revomeItemOfList(list, item);
+
+  try {
+    dispatch({
+      type: ACTIONS_TYPES.DELETE_EXPENSE,
+      payload: { expenses },
+    });
+  } catch (error) {
+    dispatch({
+      type: ACTIONS_TYPES.WALLET_ERROR,
+      payload: error,
+    });
+  }
+};
+
 export default {
   fetchCurrencies,
   addExpense,
   updateTotalExpense,
+  removeExpense,
 };
