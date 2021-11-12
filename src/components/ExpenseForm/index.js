@@ -4,18 +4,29 @@ import Input from '../Input';
 import Select from '../Select';
 import useExpenseForm from './useExpenseForm';
 import './styles.css';
-import { fetchCurrencies } from '../../actions/walletActions';
+import actions from '../../actions';
 
 const ExpenseForm = () => {
-  const { paymentMethods, tags, currenciesOptions } = useExpenseForm();
+  const {
+    paymentMethods,
+    tags,
+    currenciesOptions,
+    handleChange,
+    newExpense,
+    handleSubmit,
+  } = useExpenseForm();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchCurrencies());
+    dispatch(actions.fetchCurrencies());
   }, [dispatch]);
 
   return (
-    <form className="p-4 bg-dark text-light expense-form">
+    <form
+      className="p-4 bg-dark text-light expense-form"
+      onSubmit={ handleSubmit }
+    >
       <Input
         type="number"
         className="form-control"
@@ -23,6 +34,8 @@ const ExpenseForm = () => {
         placeholder="Valor"
         label="Valor"
         name="value"
+        value={ newExpense.value }
+        onChange={ handleChange }
       />
       <Select
         className="form-select"
@@ -30,13 +43,15 @@ const ExpenseForm = () => {
         label="Moeda"
         name="currency"
         options={ currenciesOptions }
+        onChange={ handleChange }
       />
       <Select
         className="form-select"
-        id="paymentMethod"
+        id="method"
         label="Método de pagamento"
-        name="paymentMethod"
+        name="method"
         options={ paymentMethods }
+        onChange={ handleChange }
       />
       <Select
         className="form-select"
@@ -44,6 +59,7 @@ const ExpenseForm = () => {
         label="Tag"
         name="tag"
         options={ tags }
+        onChange={ handleChange }
       />
       <Input
         type="text"
@@ -52,8 +68,15 @@ const ExpenseForm = () => {
         placeholder="Descrição"
         label="Descrição"
         name="description"
+        value={ newExpense.description }
+        onChange={ handleChange }
       />
-      <button type="button" className="btn btn-primary">Adicionar despesa</button>
+      <button
+        type="submit"
+        className="btn btn-primary"
+      >
+        Adicionar despesa
+      </button>
     </form>
   );
 };

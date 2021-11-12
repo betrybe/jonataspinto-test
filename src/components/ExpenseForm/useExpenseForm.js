@@ -1,5 +1,6 @@
-import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../actions';
 
 const useExpenseForm = () => {
   const paymentMethods = [
@@ -51,10 +52,46 @@ const useExpenseForm = () => {
 
   const currenciesOptions = mounCurrenciesOptions(wallet.currencies);
 
+  const [newExpense, setNewExpense] = useState({
+    value: 0,
+    currency: '',
+    method: '',
+    tag: '',
+    description: '',
+    exchangeRates: null,
+  });
+
+  const handleChange = useCallback((event) => {
+    const { value, name } = event.target;
+
+    const handlers = {
+      value: () => setNewExpense((prevState) => ({ ...prevState, value })),
+      currency: () => setNewExpense((prevState) => ({ ...prevState, currency: value })),
+      method: () => setNewExpense((prevState) => ({ ...prevState, method: value })),
+      tag: () => setNewExpense((prevState) => ({ ...prevState, tag: value })),
+      description: () => setNewExpense((prevState) => ({
+        ...prevState,
+        description: value,
+      })),
+    };
+
+    return handlers[name]();
+  }, []);
+
+  const dispatch = useDispatch();
+
+  const handleSubmit = useCallback((event) => {
+    event.preventDefault();
+    dispatch(actions.addExpense(newExpense, wallet.expenses.length));
+  }, [newExpense, dispatch, wallet.expenses.length]);
+
   return {
     paymentMethods,
     tags,
     currenciesOptions,
+    handleChange,
+    newExpense,
+    handleSubmit,
   };
 };
 
