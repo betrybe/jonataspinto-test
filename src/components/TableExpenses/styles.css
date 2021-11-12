@@ -1,55 +1,55 @@
 .before-currency_BRL:before {
-  content: "R$";
+  content: 'R$';
 }
 
 .before-code_USD:before {
-  content: "USD";
+  content: 'USD';
 }
 
 .before-code_CAD:before {
-  content: "CAD";
+  content: 'CAD';
 }
 
 .before-code_EUR:before {
-  content: "EUR";
+  content: 'EUR';
 }
 
 .before-code_GBP:before {
-  content: "GBP";
+  content: 'GBP';
 }
 
 .before-code_ARS:before {
-  content: "ARS";
+  content: 'ARS';
 }
 
 .before-code_BTC:before {
-  content: "BTC";
+  content: 'BTC';
 }
 
 .before-code_LTC:before {
-  content: "LTC";
+  content: 'LTC';
 }
 
 .before-code_JPY:before {
-  content: "JPY";
+  content: 'JPY';
 }
 
 .before-code_CHF:before {
-  content: "CHF";
+  content: 'CHF';
 }
 
 .before-code_CNY:before {
-  content: "CNY";
+  content: 'CNY';
 }
 
 .before-code_ILS:before {
-  content: "ILS";
+  content: 'ILS';
 }
 
 .before-code_ETH:before {
-  content: "ETH";
+  content: 'ETH';
 }
 
 .before-code_XRP:before {
-  content: "XRP";
+  content: 'XRP';
 }
