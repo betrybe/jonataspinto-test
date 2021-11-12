@@ -99,6 +99,12 @@ const useExpenseForm = () => {
     dispatch(actions.updateTotalExpense(wallet.expenses));
   }, [dispatch, wallet.expenses, wallet.expenses.length]);
 
+  useEffect(() => {
+    if (wallet.recordToEdit) {
+      setNewExpense(wallet.recordToEdit);
+    }
+  }, [wallet.recordToEdit]);
+
   return {
     paymentMethods,
     tags,

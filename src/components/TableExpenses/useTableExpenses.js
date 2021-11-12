@@ -52,10 +52,15 @@ const useTableExpenses = () => {
     dispatch(actions.removeExpense(wallet.expenses, item));
   }, [dispatch, wallet.expenses]);
 
+  const handleEdit = useCallback((item) => {
+    dispatch(actions.loadRecordToEdit(wallet.expenses, item));
+  }, [dispatch, wallet.expenses]);
+
   return {
     headers,
     rows,
     handleDelete,
+    handleEdit,
   };
 };
 
