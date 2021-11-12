@@ -4,7 +4,9 @@ import currencyFormatter from '../../utils/currencyFormatter';
 import './styles.css';
 
 const HeaderWallet = () => {
-  const user = useSelector((store) => store.user);
+  const { user, wallet } = useSelector((store) => store);
+
+  const total = currencyFormatter(wallet.totalExpenses, 'en');
 
   return (
     <header className="p-4 header-wallet-container">
@@ -24,10 +26,9 @@ const HeaderWallet = () => {
           className="mb-0 fw-bold"
           data-testid="total-field"
         >
-          Despesa Total:
-          {' '}
+          {`Despesa Total: ${total} `}
           <span data-testid="header-currency-field">
-            {`${currencyFormatter()} BRL`}
+            BRL
           </span>
         </p>
       </div>
