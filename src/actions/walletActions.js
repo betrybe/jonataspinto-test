@@ -1,5 +1,6 @@
 import ACTIONS_TYPES from '../constants';
 import getAllCurrencies from '../services/getCurrencies';
+import addUpExpenses from '../utils/addUpExpenses';
 
 const fetchCurrencies = () => async (dispatch) => {
   dispatch({
@@ -47,7 +48,28 @@ const addExpense = (data, id) => async (dispatch) => {
   }
 };
 
+const updateTotalExpense = (expenses) => async (dispatch) => {
+  dispatch({
+    type: ACTIONS_TYPES.WALLET_IS_FETCHING,
+  });
+
+  try {
+    const totalExpenses = addUpExpenses(expenses);
+
+    dispatch({
+      type: ACTIONS_TYPES.UPDATE_TOTAL_EXPENSES,
+      payload: totalExpenses,
+    });
+  } catch (error) {
+    dispatch({
+      type: ACTIONS_TYPES.WALLET_ERROR,
+      payload: error,
+    });
+  }
+};
+
 export default {
   fetchCurrencies,
   addExpense,
+  updateTotalExpense,
 };
