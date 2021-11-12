@@ -46,6 +46,12 @@ const reducer = (state = initialState, action) => {
       totalExpenses: action.payload,
       status: TYPES.STATUS_SUCCESS,
     };
+  case TYPES.DELETE_EXPENSE:
+    return {
+      ...state,
+      ...action.payload,
+      status: TYPES.STATUS_SUCCESS,
+    };
 
   default:
     return state;
