@@ -29,14 +29,14 @@ const item2 = expenses[1];
 
 describe('Util para remover item de lista.', () => {
   it('removendo item de id 0', () => {
-    const formatedValue = revomeItemOfList(expenses, item1);
+    const result = revomeItemOfList(expenses, item1);
 
-    expect(formatedValue).toEqual(result1);
+    expect(result).toEqual(result1);
   });
 
   it('removendo item utilizando a key value', () => {
-    const formatedValue = revomeItemOfList(expenses, item2, 'value');
+    const result = revomeItemOfList(expenses, item2, 'value');
 
-    expect(formatedValue).toEqual(result2);
+    expect(result).toEqual(result2);
   });
 });
