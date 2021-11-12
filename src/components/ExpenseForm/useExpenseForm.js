@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../actions';
 
@@ -84,6 +84,10 @@ const useExpenseForm = () => {
     event.preventDefault();
     dispatch(actions.addExpense(newExpense, wallet.expenses.length));
   }, [newExpense, dispatch, wallet.expenses.length]);
+
+  useEffect(() => {
+    dispatch(actions.updateTotalExpense(wallet.expenses));
+  }, [dispatch, wallet.expenses, wallet.expenses.length]);
 
   return {
     paymentMethods,
