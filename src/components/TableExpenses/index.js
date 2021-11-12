@@ -47,6 +47,7 @@ const TableExpenses = () => {
               <button
                 type="button"
                 className="btn btn-warning me-2"
+                data-testid="edit-btn"
               >
                 <FaPen />
               </button>
