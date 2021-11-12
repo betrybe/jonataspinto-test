@@ -6,6 +6,7 @@ const initialState = {
   expenses: [],
   status: TYPES.STATUS_IDLE,
   error: null,
+  totalExpenses: 0,
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +38,12 @@ const reducer = (state = initialState, action) => {
         action.payload,
       ],
       isFetching: false,
+      status: TYPES.STATUS_SUCCESS,
+    };
+  case TYPES.UPDATE_TOTAL_EXPENSES:
+    return {
+      ...state,
+      totalExpenses: action.payload,
       status: TYPES.STATUS_SUCCESS,
     };
 
