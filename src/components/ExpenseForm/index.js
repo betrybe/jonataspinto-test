@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Input from '../Input';
 import Select from '../Select';
 import useExpenseForm from './useExpenseForm';
 import './styles.css';
+import { fetchCurrencies } from '../../actions/walletActions';
 
 const ExpenseForm = () => {
-  const { paymentMethods, tags, currencies } = useExpenseForm();
+  const { paymentMethods, tags, currenciesOptions } = useExpenseForm();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCurrencies());
+  }, [dispatch]);
 
   return (
     <form className="p-4 bg-dark text-light expense-form">
@@ -22,7 +29,7 @@ const ExpenseForm = () => {
         id="currency"
         label="Moeda"
         name="currency"
-        options={ currencies }
+        options={ currenciesOptions }
       />
       <Select
         className="form-select"
