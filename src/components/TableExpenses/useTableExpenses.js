@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../actions';
 
 const useTableExpenses = () => {
   const headers = useMemo(() => ([
@@ -45,9 +46,16 @@ const useTableExpenses = () => {
     setRows(draftRows);
   }, [wallet.expenses, mountRow]);
 
+  const dispatch = useDispatch();
+
+  const handleDelete = useCallback((item) => {
+    dispatch(actions.removeExpense(wallet.expenses, item));
+  }, [dispatch, wallet.expenses]);
+
   return {
     headers,
     rows,
+    handleDelete,
   };
 };
 

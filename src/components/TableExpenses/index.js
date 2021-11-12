@@ -4,7 +4,7 @@ import useTableExpenses from './useTableExpenses';
 import './styles.css';
 
 const TableExpenses = () => {
-  const { headers, rows } = useTableExpenses();
+  const { headers, rows, handleDelete } = useTableExpenses();
 
   return (
     <table className="table table-borderless">
@@ -54,6 +54,7 @@ const TableExpenses = () => {
                 type="button"
                 className="btn btn-danger"
                 data-testid="delete-btn"
+                onClick={ () => handleDelete(row) }
               >
                 <FaTrash />
               </button>
