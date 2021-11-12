@@ -1,17 +1,11 @@
 const getAllCurrencies = async () => {
-  const storageCurrencies = localStorage.getItem('currencies');
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
 
-  if (!storageCurrencies) {
-    const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const responseParsedToJoson = await response.json();
 
-    const responseParsedToJoson = await response.json();
+  localStorage.setItem('currencies', JSON.stringify(responseParsedToJoson));
 
-    localStorage.setItem('currencies', JSON.stringify(responseParsedToJoson));
-
-    return responseParsedToJoson;
-  }
-
-  return JSON.parse(storageCurrencies);
+  return responseParsedToJoson;
 };
 
 export default getAllCurrencies;
