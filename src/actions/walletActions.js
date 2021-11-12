@@ -3,6 +3,7 @@ import getAllCurrencies from '../services/getCurrencies';
 import addUpExpenses from '../utils/addUpExpenses';
 import revomeItemOfList from '../utils/revomeItemOfList';
 import selectItemOfList from '../utils/selectItemOfList';
+import replaceItemOfList from '../utils/replaceItemOfList';
 
 const fetchCurrencies = () => async (dispatch) => {
   dispatch({
@@ -109,10 +110,31 @@ const loadRecordToEdit = (list, item) => async (dispatch) => {
   }
 };
 
+const saveEditedRecord = (list, changedItem) => async (dispatch) => {
+  dispatch({
+    type: ACTIONS_TYPES.WALLET_IS_FETCHING,
+  });
+
+  const payload = replaceItemOfList(list, changedItem);
+
+  try {
+    dispatch({
+      type: ACTIONS_TYPES.LOAD_RECORD_TO_EDIT,
+      payload,
+    });
+  } catch (error) {
+    dispatch({
+      type: ACTIONS_TYPES.WALLET_ERROR,
+      payload: error,
+    });
+  }
+};
+
 export default {
   fetchCurrencies,
   addExpense,
   updateTotalExpense,
   removeExpense,
   loadRecordToEdit,
+  saveEditedRecord,
 };
