@@ -10,27 +10,17 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-  case TYPES.LOAD_WALLET:
-    return {
-      ...state,
-      status: TYPES.STATUS_LOADING,
-    };
-  case TYPES.LOAD_WALLET_SUCCESS:
-    return {
-      ...state,
-      ...action.payload,
-      status: TYPES.STATUS_SUCCESS,
-    };
-  case TYPES.LOAD_WALLET_ERROR:
-    return {
-      error: action.payload,
-      status: TYPES.STATUS_ERROR,
-    };
-  case TYPES.FETCH_CURRENCIES:
+  case TYPES.WALLET_IS_FETCHING:
     return {
       ...state,
       isFetching: true,
       status: TYPES.STATUS_LOADING,
+    };
+  case TYPES.WALLET_ERROR:
+    return {
+      error: action.payload,
+      isFetching: false,
+      status: TYPES.STATUS_ERROR,
     };
   case TYPES.FETCH_CURRENCIES_SUCCESS:
     return {
@@ -39,11 +29,15 @@ const reducer = (state = initialState, action) => {
       isFetching: false,
       status: TYPES.STATUS_SUCCESS,
     };
-  case TYPES.FETCH_CURRENCIES_ERROR:
+  case TYPES.ADD_EXPENSE_SUCCESS:
     return {
-      error: action.payload,
+      ...state,
+      expenses: [
+        ...state.expenses,
+        action.payload,
+      ],
       isFetching: false,
-      status: TYPES.STATUS_ERROR,
+      status: TYPES.STATUS_SUCCESS,
     };
 
   default:
