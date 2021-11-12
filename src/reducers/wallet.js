@@ -26,6 +26,25 @@ const reducer = (state = initialState, action) => {
       error: action.payload,
       status: TYPES.STATUS_ERROR,
     };
+  case TYPES.FETCH_CURRENCIES:
+    return {
+      ...state,
+      isFetching: true,
+      status: TYPES.STATUS_LOADING,
+    };
+  case TYPES.FETCH_CURRENCIES_SUCCESS:
+    return {
+      ...state,
+      ...action.payload,
+      isFetching: false,
+      status: TYPES.STATUS_SUCCESS,
+    };
+  case TYPES.FETCH_CURRENCIES_ERROR:
+    return {
+      error: action.payload,
+      isFetching: false,
+      status: TYPES.STATUS_ERROR,
+    };
 
   default:
     return state;
