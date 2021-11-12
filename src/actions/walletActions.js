@@ -119,7 +119,7 @@ const saveEditedRecord = (list, changedItem) => async (dispatch) => {
 
   try {
     dispatch({
-      type: ACTIONS_TYPES.LOAD_RECORD_TO_EDIT,
+      type: ACTIONS_TYPES.SAVE_EDITED_RECORD,
       payload,
     });
   } catch (error) {
