@@ -1,3 +1,6 @@
+import { useCallback } from 'react';
+import { useSelector } from 'react-redux';
+
 const useExpenseForm = () => {
   const paymentMethods = [
     {
@@ -37,12 +40,21 @@ const useExpenseForm = () => {
     },
   ];
 
-  const currencies = [];
+  const mounCurrenciesOptions = useCallback((list = []) => (
+    list.map((currency) => ({
+      value: currency,
+      label: currency,
+    }))
+  ), []);
+
+  const wallet = useSelector((store) => store.wallet);
+
+  const currenciesOptions = mounCurrenciesOptions(wallet.currencies);
 
   return {
     paymentMethods,
     tags,
-    currencies,
+    currenciesOptions,
   };
 };
 
