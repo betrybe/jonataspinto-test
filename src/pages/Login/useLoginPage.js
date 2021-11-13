@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import actions from '../../actions';
+import { authenticate } from '../../actions';
 import loginSchema from './schema';
 
 const useLoginPage = () => {
@@ -18,7 +18,7 @@ const useLoginPage = () => {
 
   const handleSubmit = useCallback((event) => {
     event.preventDefault();
-    dispatch(actions.authenticate(credentials));
+    dispatch(authenticate(credentials));
     history.push('/carteira');
   }, [credentials, dispatch, history]);
 
