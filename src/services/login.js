@@ -1,7 +1,7 @@
-const login = (credentials) => new Promise((resolve) => {
+const login = (credentials) => {
   const { email } = credentials;
 
-  resolve({ email });
-});
+  return ({ email });
+};
 
 export default login;

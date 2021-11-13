@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import currencyFormatter from '../../utils/currencyFormatter';
 import './styles.css';
 
@@ -10,11 +11,13 @@ const HeaderWallet = () => {
 
   return (
     <header className="p-4 header-wallet-container">
-      <img
-        src="brand-logo-full.png"
-        alt="logo trybe"
-        className="header-wallet__brand-logo "
-      />
+      <Link to="/">
+        <img
+          src="brand-logo-full.png"
+          alt="logo trybe"
+          className="header-wallet__brand-logo "
+        />
+      </Link>
       <div className="header-wallet__status">
         <p
           className="mb-0 fw-bold"

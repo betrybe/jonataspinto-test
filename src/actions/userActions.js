@@ -1,13 +1,13 @@
 import ACTIONS_TYPES from '../constants';
 import services from '../services';
 
-export const authenticate = (credentials) => async (dispatch) => {
+export const authenticate = (credentials) => (dispatch) => {
   dispatch({
     type: ACTIONS_TYPES.LOGIN_REQUEST,
   });
 
   try {
-    const user = await services.login(credentials);
+    const user = services.login(credentials);
 
     dispatch({
       type: ACTIONS_TYPES.LOGIN_SUCCESS,
