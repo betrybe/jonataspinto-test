@@ -2,13 +2,14 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import actions from '../../actions';
-import loginSchema from './schema';
 
 const useLoginPage = () => {
   const [credentials, setCredentials] = useState({
     email: '',
     password: '',
   });
+
+  const minimumPassworLength = 6;
 
   const [readyToSend, setReadyToSend] = useState(false);
 
@@ -33,13 +34,25 @@ const useLoginPage = () => {
     return handlers[name]();
   }, []);
 
-  const handleValidationForm = (values) => {
-    loginSchema.isValid(values).then((result) => result && setReadyToSend(result));
-  };
+  const validateEmail = useCallback((email) => {
+    const re = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
+    return re.test(String(email).toLowerCase());
+  }, []);
+
+  const handleValidationForm = useCallback((values) => {
+    if (!validateEmail(values.email)) {
+      return setReadyToSend(false);
+    }
+    if ([...values.password].length < minimumPassworLength) {
+      return setReadyToSend(false);
+    }
+    setReadyToSend(true);
+  }, [validateEmail]);
 
   useEffect(() => {
     handleValidationForm(credentials);
-  }, [credentials]);
+  }, [credentials, handleValidationForm]);
 
   return {
     credentials,
