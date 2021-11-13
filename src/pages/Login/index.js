@@ -1,5 +1,6 @@
 import React from 'react';
 import useLoginPage from './useLoginPage';
+import Input from '../../components/Input';
 import './styles.css';
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
           alt="logo trybe completa"
           className="login-container-form__brand-logo"
         />
-        <input
+        <Input
           type="email"
           className="form-control"
           id="email"
@@ -23,7 +24,7 @@ const Login = () => {
           value={ credentials.email }
           onChange={ handleChange }
         />
-        <input
+        <Input
           type="password"
           className="form-control"
           id="password"

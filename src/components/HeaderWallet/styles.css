@@ -1,0 +1,24 @@
+.header-wallet-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media ( max-width : 768px ) {
+
+  .header-wallet-container {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.header-wallet__brand-logo {
+  width: 200px;
+}
+
+.header-wallet__status {
+  align-items: center;
+  display: flex;
+  gap: 48px;
+}
