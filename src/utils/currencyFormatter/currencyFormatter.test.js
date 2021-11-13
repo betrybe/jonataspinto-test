@@ -10,7 +10,7 @@ describe('Currency formatter', () => {
   it('testando valor default', () => {
     const formatedValue = currencyFormatter();
 
-    expect(formatedValue).toMatch('0,00');
+    expect(formatedValue).toMatch('0');
   });
 
   it('testando formatação para euro', () => {

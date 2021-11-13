@@ -1,6 +1,6 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import App from '../App';
 
 import { renderWithRouterAndStore } from './testConfig';
@@ -79,7 +79,7 @@ describe('2 - Realize as seguintes verificações nos campos de email, senha e b
     expect(button).toBeDisabled();
   });
 
-  test('O botão de "Entrar" está habilitado quando um email e uma senha válidos são passados', async () => {
+  test('O botão de "Entrar" está habilitado quando um email e uma senha válidos são passados', () => {
     renderWithRouterAndStore(<App />, '/');
 
     const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
@@ -88,32 +88,32 @@ describe('2 - Realize as seguintes verificações nos campos de email, senha e b
 
     userEvent.type(email, VALID_EMAIL);
     userEvent.type(senha, VALID_PASSWORD);
-    await waitFor(() => expect(button).toBeEnabled());
+    expect(button).toBeEnabled();
   });
 });
 
 describe('3 - Utilize o Redux para salvar no estado global as informações da pessoa logada', () => {
-  test('Salve o email no estado da aplicação, com a chave email, assim que o usuário logar.', async () => {
+  test('Salve o email no estado da aplicação, com a chave email, assim que o usuário logar.', () => {
     const { store } = renderWithRouterAndStore(<App />, '/');
     const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
     const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
     const button = screen.getByText(/Entrar/i);
 
-    await waitFor(() => userEvent.type(email, VALID_EMAIL));
-    await waitFor(() => userEvent.type(senha, VALID_PASSWORD));
+    userEvent.type(email, VALID_EMAIL);
+    userEvent.type(senha, VALID_PASSWORD);
     fireEvent.click(button);
 
-    await waitFor(() => expect(store.getState().user.email).toBe(VALID_EMAIL));
+    expect(store.getState().user.email).toBe(VALID_EMAIL);
   });
 
-  test('A rota deve ser mudada para \'/carteira\' após o clique no botão.', async () => {
+  test('A rota deve ser mudada para \'/carteira\' após o clique no botão.', () => {
     const { history } = renderWithRouterAndStore(<App />, '/');
     const email = screen.getByTestId(EMAIL_INPUT_TEST_ID);
     const senha = screen.getByTestId(PASSWORD_INPUT_TEST_ID);
     const button = screen.getByText(/Entrar/i);
 
-    await waitFor(() => userEvent.type(email, VALID_EMAIL));
-    await waitFor(() => userEvent.type(senha, VALID_PASSWORD));
+    userEvent.type(email, VALID_EMAIL);
+    userEvent.type(senha, VALID_PASSWORD);
     fireEvent.click(button);
 
     expect(history.location.pathname).toBe('/carteira');
