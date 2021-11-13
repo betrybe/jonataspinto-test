@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import actions from '../../actions';
-import newExpenseSchema from './schema';
 
 const useExpenseForm = () => {
   const paymentMethods = useMemo(() => ([
@@ -98,12 +97,8 @@ const useExpenseForm = () => {
       return handleSaveEditedRecord({ id: wallet.recordToEdit.id, ...formValues });
     }
 
-    newExpenseSchema.isValid(formValues).then((isValid) => {
-      if (isValid) {
-        dispatch(actions.addExpense(formValues, wallet.expenses.length));
-        setNewExpense(newExpenseInitialState);
-      }
-    });
+    dispatch(actions.addExpense(formValues, wallet.expenses.length));
+    setNewExpense(newExpenseInitialState);
   }, [
     dispatch,
     wallet.expenses.length,
